@@ -1,0 +1,96 @@
+package com.zerimaria.dice;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.android.flexbox.FlexboxLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class MainActivity extends AppCompatActivity {
+
+    private List<TableDie> tableDice;
+    private Random rand;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        tableDice = new ArrayList<>();
+        rand = new Random();
+    }
+
+    public void dieGenClick(View view) {
+        final Button btnDieGen = (Button)view;
+
+        final FlexboxLayout flexboxLayout = findViewById(R.id.flexboxLayout);
+
+        final Button btnDieAct = new Button(this);
+        btnDieAct.setText(btnDieGen.getText());
+        btnDieAct.setTextSize(TypedValue.COMPLEX_UNIT_PX, btnDieGen.getTextSize());
+
+        flexboxLayout.addView(btnDieAct);
+        FlexboxLayout.LayoutParams lpBtnDieAct = (FlexboxLayout.LayoutParams) btnDieAct.getLayoutParams();
+        lpBtnDieAct.setFlexBasisPercent(-1); // use explicit size; don't stretch
+        lpBtnDieAct.setHeight(btnDieGen.getHeight());
+        lpBtnDieAct.setWidth(btnDieGen.getWidth());
+        btnDieAct.setLayoutParams(lpBtnDieAct);
+
+        TableDie newDie = new TableDie(btnDieAct, getNumSides(btnDieGen.getId()));
+        tableDice.add(newDie);
+        btnDieAct.setTag(newDie);
+
+        btnDieAct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // todo: do I have a memory leak here, creating button views that never go away?
+
+                flexboxLayout.removeView(v);
+
+                tableDice.remove(v.getTag());
+            }
+        });
+    }
+
+    private int getNumSides(int dieRid) {
+        if (dieRid == R.id.btnD4) return 4;
+        if (dieRid == R.id.btnD6) return 6;
+        if (dieRid == R.id.btnD8) return 8;
+        if (dieRid == R.id.btnD10) return 10;
+        if (dieRid == R.id.btnD12) return 12;
+        if (dieRid == R.id.btnD20) return 20;
+
+        throw new RuntimeException("Invalid dieRid");
+    }
+
+    public void rollClick(View view) {
+        for (TableDie tableDie : tableDice) {
+            int rollValue = rand.nextInt(tableDie.getNumSides()) + 1;
+            tableDie.getButton().setText(Integer.toString(rollValue));
+        }
+    }
+
+    public void resetClick(View view) {
+        for (TableDie tableDie : tableDice) {
+            tableDie.getButton().setText(tableDie.getName());
+        }
+    }
+
+    public void clearClick(View view) {
+        FlexboxLayout flexboxLayout = findViewById(R.id.flexboxLayout);
+        flexboxLayout.removeAllViews();
+        tableDice.clear();
+    }
+}
