@@ -10,6 +10,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -51,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         TableDie newDie = new TableDie(btnDieAct, getNumSides(btnDieGen.getId()));
         tableDice.add(newDie);
         btnDieAct.setTag(newDie);
+        updateStats();
+        resetClick(view);
 
         btnDieAct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,8 +63,26 @@ public class MainActivity extends AppCompatActivity {
                 flexboxLayout.removeView(v);
 
                 tableDice.remove(v.getTag());
+
+                updateStats();
+                resetClick(v);
+                //todo: update total to value of remaining dice
             }
         });
+    }
+
+    private void updateStats() {
+        float sumOfAvgs = 0;
+        int max = 0;
+        int min = 0;
+        for (TableDie tableDie : tableDice) {
+            min++;
+            max += tableDie.getNumSides();
+            sumOfAvgs += tableDie.getAverage();
+        }
+        ((TextView)findViewById(R.id.lblMin)).setText("min: " + Float.toString(min));
+        ((TextView)findViewById(R.id.lblMax)).setText("max: " + Float.toString(max));
+        ((TextView)findViewById(R.id.lblAvg)).setText("avg: " + Float.toString(sumOfAvgs));
     }
 
     private int getNumSides(int dieRid) {
@@ -76,21 +97,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void rollClick(View view) {
+        int total = 0;
         for (TableDie tableDie : tableDice) {
             int rollValue = rand.nextInt(tableDie.getNumSides()) + 1;
+            total += rollValue;
             tableDie.getButton().setText(Integer.toString(rollValue));
         }
+        ((TextView)findViewById(R.id.lblTotal)).setText(Integer.toString(total));
     }
 
     public void resetClick(View view) {
         for (TableDie tableDie : tableDice) {
             tableDie.getButton().setText(tableDie.getName());
         }
+        ((TextView)findViewById(R.id.lblTotal)).setText(Integer.toString(0));
     }
 
     public void clearClick(View view) {
         FlexboxLayout flexboxLayout = findViewById(R.id.flexboxLayout);
         flexboxLayout.removeAllViews();
         tableDice.clear();
+        updateStats();
+        ((TextView)findViewById(R.id.lblTotal)).setText(Integer.toString(0));
     }
 }

@@ -26,4 +26,12 @@ public class TableDie {
     public String getName() {
         return this.name;
     }
+
+    public float getAverage() {
+        float sumOfValues = 0;
+        for (int i = 0; i < numSides; i++) {
+            sumOfValues += i + 1;
+        }
+        return sumOfValues / numSides;
+    }
 }

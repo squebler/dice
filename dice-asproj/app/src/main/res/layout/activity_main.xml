@@ -119,10 +119,10 @@
         android:id="@+id/scrollView"
         android:layout_width="405dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="20dp"
         android:fadingEdgeLength="40sp"
         android:requiresFadingEdge="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btnD6"
+        app:layout_constraintBottom_toTopOf="@+id/lblTotal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -134,4 +134,44 @@
             android:layout_height="wrap_content"
             app:flexWrap="wrap" />
     </ScrollView>
+
+    <TextView
+        android:id="@+id/lblAvg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:text="avg: 0.0"
+        app:layout_constraintBottom_toTopOf="@+id/btnD6"
+        app:layout_constraintEnd_toEndOf="@+id/btnD6"
+        app:layout_constraintStart_toStartOf="@+id/btnD6" />
+
+    <TextView
+        android:id="@+id/lblMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:text="min: 0.0"
+        app:layout_constraintBottom_toBottomOf="@+id/lblAvg"
+        app:layout_constraintEnd_toStartOf="@+id/lblAvg" />
+
+    <TextView
+        android:id="@+id/lblMax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="max: 0.0"
+        app:layout_constraintBottom_toBottomOf="@+id/lblMin"
+        app:layout_constraintStart_toEndOf="@+id/lblAvg" />
+
+    <TextView
+        android:id="@+id/lblTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="0"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/lblAvg"
+        app:layout_constraintEnd_toEndOf="@+id/lblAvg"
+        app:layout_constraintStart_toStartOf="@+id/lblAvg" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

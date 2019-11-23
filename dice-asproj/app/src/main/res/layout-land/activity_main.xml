@@ -9,6 +9,45 @@
     android:orientation="horizontal"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/lblTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="0"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/lblAvg"
+        app:layout_constraintEnd_toEndOf="@+id/lblAvg"
+        app:layout_constraintStart_toStartOf="@+id/lblAvg" />
+
+    <TextView
+        android:id="@+id/lblAvg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="avg: 0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/scrollView"
+        app:layout_constraintStart_toStartOf="@+id/scrollView" />
+
+    <TextView
+        android:id="@+id/lblMax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="max: 0.0"
+        app:layout_constraintBottom_toBottomOf="@+id/lblAvg"
+        app:layout_constraintStart_toEndOf="@+id/lblAvg" />
+
+    <TextView
+        android:id="@+id/lblMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:text="min: 0.0"
+        app:layout_constraintBottom_toBottomOf="@+id/lblAvg"
+        app:layout_constraintEnd_toStartOf="@+id/lblAvg" />
+
     <Button
         android:id="@+id/btnD4"
         android:layout_width="45sp"
@@ -119,9 +158,10 @@
         android:id="@+id/scrollView"
         android:layout_width="405dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
         android:fadingEdgeLength="40sp"
         android:requiresFadingEdge="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/lblTotal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnD8"
         app:layout_constraintTop_toTopOf="parent">
