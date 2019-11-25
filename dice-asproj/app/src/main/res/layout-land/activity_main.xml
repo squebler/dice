@@ -24,11 +24,12 @@
         android:id="@+id/lblAvg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:text="avg: 0.0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/scrollView"
-        app:layout_constraintStart_toStartOf="@+id/scrollView" />
+        app:layout_constraintStart_toStartOf="@+id/scrollView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.97" />
 
     <TextView
         android:id="@+id/lblMax"
@@ -52,15 +53,16 @@
         android:id="@+id/btnD4"
         android:layout_width="45sp"
         android:layout_height="40sp"
-        android:layout_marginStart="64dp"
-        android:layout_marginLeft="64dp"
-        android:layout_marginTop="64dp"
         android:onClick="dieGenClick"
         android:text="d4"
         android:textAllCaps="false"
         android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.13999999" />
 
     <Button
         android:id="@+id/btnD6"
@@ -156,14 +158,15 @@
 
     <ScrollView
         android:id="@+id/scrollView"
-        android:layout_width="405dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="20dp"
         android:layout_marginBottom="20dp"
         android:fadingEdgeLength="40sp"
         android:requiresFadingEdge="vertical"
         app:layout_constraintBottom_toTopOf="@+id/lblTotal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnD8"
+        app:layout_constraintStart_toEndOf="@+id/btnReset2"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.flexbox.FlexboxLayout

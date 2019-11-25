@@ -117,7 +117,7 @@
 
     <ScrollView
         android:id="@+id/scrollView"
-        android:layout_width="405dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="20dp"
         android:fadingEdgeLength="40sp"
