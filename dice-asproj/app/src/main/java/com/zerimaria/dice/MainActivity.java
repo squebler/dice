@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -20,6 +21,8 @@ import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+
+    private final int ROW_HEIGHT = 60;
 
     private List<TableDie> tableDice;
     private Random rand;
@@ -41,12 +44,22 @@ public class MainActivity extends AppCompatActivity {
         final Button btnDieAct = new Button(this);
         btnDieAct.setText(btnDieGen.getText());
         btnDieAct.setTextSize(TypedValue.COMPLEX_UNIT_PX, btnDieGen.getTextSize());
+        btnDieAct.setBackground(btnDieGen.getBackground());
+        btnDieAct.setPadding(
+                btnDieGen.getPaddingLeft(),
+                btnDieGen.getPaddingTop(),
+                btnDieGen.getPaddingRight(),
+                btnDieGen.getPaddingBottom()
+        );
 
         flexboxLayout.addView(btnDieAct);
         FlexboxLayout.LayoutParams lpBtnDieAct = (FlexboxLayout.LayoutParams) btnDieAct.getLayoutParams();
         lpBtnDieAct.setFlexBasisPercent(-1); // use explicit size; don't stretch
         lpBtnDieAct.setHeight(btnDieGen.getHeight());
         lpBtnDieAct.setWidth(btnDieGen.getWidth());
+        float marginVert = dpToPx(ROW_HEIGHT, this) - btnDieGen.getHeight();
+        float marginHorz = dpToPx(10, this);
+        lpBtnDieAct.setMargins((int)(marginHorz / 2), (int)(marginVert / 2), (int)(marginHorz / 2), (int)(marginVert / 2));
         btnDieAct.setLayoutParams(lpBtnDieAct);
 
         TableDie newDie = new TableDie(btnDieAct, getNumSides(btnDieGen.getId()));
@@ -119,5 +132,9 @@ public class MainActivity extends AppCompatActivity {
         tableDice.clear();
         updateStats();
         ((TextView)findViewById(R.id.lblTotal)).setText(Integer.toString(0));
+    }
+
+    public static int dpToPx(float dp, Context context) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
     }
 }
