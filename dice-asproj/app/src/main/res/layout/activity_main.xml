@@ -138,6 +138,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="20dp"
         android:fadingEdgeLength="40sp"
+        android:fillViewport="true"
         android:requiresFadingEdge="vertical"
         app:layout_constraintBottom_toTopOf="@+id/lblTotal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -149,7 +150,8 @@
             android:id="@+id/flexboxLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            app:alignContent="center"
+            app:alignItems="center"
             app:flexWrap="wrap"
             app:justifyContent="center" />
     </ScrollView>
