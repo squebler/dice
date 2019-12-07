@@ -136,6 +136,7 @@
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:fadingEdgeLength="40sp"
         android:fillViewport="true"
@@ -143,7 +144,7 @@
         app:layout_constraintBottom_toTopOf="@+id/lblTotal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSettings"
         app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.flexbox.FlexboxLayout
@@ -194,5 +195,20 @@
         app:layout_constraintBottom_toTopOf="@+id/lblAvg"
         app:layout_constraintEnd_toEndOf="@+id/lblAvg"
         app:layout_constraintStart_toStartOf="@+id/lblAvg" />
+
+    <Button
+        android:id="@+id/btnSettings"
+        android:layout_width="87dp"
+        android:layout_height="25dp"
+        android:background="#32a852"
+        android:onClick="settingsClick"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:text="settings"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

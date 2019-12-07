@@ -3,13 +3,17 @@ package com.zerimaria.dice;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.fragment.app.FragmentActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -22,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity implements View.OnTouchListener {
 
     private final int ROW_HEIGHT = 60;
 
@@ -36,6 +40,8 @@ public class MainActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);  //Remove title bar; must go above setContentView to avoid crash, I heard.
 
         setContentView(R.layout.activity_main);
+        ConstraintLayout constraintLayout = findViewById(R.id.constraintLayout);
+        constraintLayout.setOnTouchListener(this);
 
         tableDice = new ArrayList<>();
         rand = new Random();
@@ -139,7 +145,23 @@ public class MainActivity extends Activity {
         ((TextView)findViewById(R.id.lblTotal)).setText(Integer.toString(0));
     }
 
+    public void settingsClick(View view) {
+        rollClick(view);
+
+//        Intent openSettingsIntent = new Intent(this, SettingsActivity.class);
+//        startActivity(openSettingsIntent);
+
+        new ColorPickerDialogFragment().show(getSupportFragmentManager(), null);
+    }
+
     public static int dpToPx(float dp, Context context) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent event) {
+        rollClick(view);
+
+        return true;
     }
 }
