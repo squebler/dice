@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#AD9478"
+    android:focusableInTouchMode="true"
+    android:onClick="backgroundClick"
     android:orientation="horizontal"
     tools:context=".MainActivity">
 
@@ -179,8 +181,10 @@
         android:layout_height="0dp"
         android:layout_marginStart="40dp"
         android:layout_marginBottom="20dp"
+        android:clickable="false"
         android:fadingEdgeLength="40sp"
         android:fillViewport="true"
+        android:onClick="backgroundClick"
         android:requiresFadingEdge="vertical"
         app:layout_constraintBottom_toTopOf="@+id/lblTotal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -191,9 +195,43 @@
             android:id="@+id/flexboxLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="false"
+            android:onClick="backgroundClick"
             app:alignContent="center"
             app:alignItems="center"
             app:flexWrap="wrap"
             app:justifyContent="center" />
     </ScrollView>
+
+    <TextView
+        android:id="@+id/lblPlus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="+"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="@+id/lblTotal"
+        app:layout_constraintStart_toEndOf="@+id/lblTotal"
+        app:layout_constraintTop_toTopOf="@+id/lblTotal" />
+
+    <EditText
+        android:id="@+id/tbPlus"
+        android:layout_width="wrap_content"
+        android:layout_height="76dp"
+        android:layout_marginStart="10dp"
+        android:background="@null"
+        android:inputType="numberSigned"
+        android:maxEms="3"
+        android:minEms="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:text="0"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="@+id/lblPlus"
+        app:layout_constraintStart_toEndOf="@+id/lblPlus"
+        app:layout_constraintTop_toTopOf="@+id/lblPlus" />
+
+<!--    ;
+        android:maxLength="3"-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

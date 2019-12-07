@@ -8,11 +8,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,8 +30,11 @@ public class MainActivity extends Activity {
 
     private final int ROW_HEIGHT = 60;
 
+    private int rollValue = 0;
     private List<TableDie> tableDice;
     private Random rand;
+
+    private EditText tbPlus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +46,35 @@ public class MainActivity extends Activity {
 
         tableDice = new ArrayList<>();
         rand = new Random();
+
+        tbPlus = findViewById(R.id.tbPlus);
+
+        tbPlus.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (tbPlus.getText().length() < 1) {
+                    tbPlus.setText("0");
+                    tbPlus.setSelection(0,1);
+                }
+
+                updateStats();
+            }
+        });
     }
 
     public void dieGenClick(View view) {
+        tbPlus.clearFocus();
+
         final Button btnDieGen = (Button)view;
 
         final FlexboxLayout flexboxLayout = findViewById(R.id.flexboxLayout);
@@ -89,10 +122,20 @@ public class MainActivity extends Activity {
         });
     }
 
+    private int getPlusValue() {
+        try {
+            return Integer.parseInt(tbPlus.getText().toString());
+        }
+        catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
     private void updateStats() {
-        float sumOfAvgs = 0;
-        int max = 0;
-        int min = 0;
+        int plusValue = getPlusValue();
+        float sumOfAvgs = plusValue;
+        int max = plusValue;
+        int min = plusValue;
         for (TableDie tableDie : tableDice) {
             min++;
             max += tableDie.getNumSides();
@@ -115,9 +158,12 @@ public class MainActivity extends Activity {
     }
 
     public void rollClick(View view) {
+        tbPlus.clearFocus();
+
         int total = 0;
+        rollValue = 0;
         for (TableDie tableDie : tableDice) {
-            int rollValue = rand.nextInt(tableDie.getNumSides()) + 1;
+            rollValue = rand.nextInt(tableDie.getNumSides()) + 1;
             total += rollValue;
             tableDie.getButton().setText(Integer.toString(rollValue));
         }
@@ -125,18 +171,27 @@ public class MainActivity extends Activity {
     }
 
     public void resetClick(View view) {
+        tbPlus.clearFocus();
+
         for (TableDie tableDie : tableDice) {
             tableDie.getButton().setText(tableDie.getName());
         }
+        rollValue = 0;
         ((TextView)findViewById(R.id.lblTotal)).setText(Integer.toString(0));
     }
 
     public void clearClick(View view) {
+        tbPlus.clearFocus();
+
         FlexboxLayout flexboxLayout = findViewById(R.id.flexboxLayout);
         flexboxLayout.removeAllViews();
         tableDice.clear();
         updateStats();
         ((TextView)findViewById(R.id.lblTotal)).setText(Integer.toString(0));
+    }
+
+    public void backgroundClick(View view) {
+        tbPlus.clearFocus();
     }
 
     public static int dpToPx(float dp, Context context) {
