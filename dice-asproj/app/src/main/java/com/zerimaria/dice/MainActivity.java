@@ -96,7 +96,7 @@ public class MainActivity extends Activity {
         tableDice.add(newDie);
         btnDieAct.setTag(newDie);
         updateStats();
-        resetClick(view);
+        prepClick(view);
 
         btnDieAct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +108,7 @@ public class MainActivity extends Activity {
                 tableDice.remove(v.getTag());
 
                 updateStats();
-                resetClick(v);
+                prepClick(v);
                 //todo: update total to value of remaining dice
             }
         });
@@ -163,7 +163,7 @@ public class MainActivity extends Activity {
         updateStats();
     }
 
-    public void resetClick(View view) {
+    public void prepClick(View view) {
         tbPlus.clearFocus();
 
         for (TableDie tableDie : tableDice) {
@@ -181,6 +181,7 @@ public class MainActivity extends Activity {
         flexboxLayout.removeAllViews();
         tableDice.clear();
         rollValueAllDice = 0;
+        tbPlus.setText("0");
         updateStats();
     }
 

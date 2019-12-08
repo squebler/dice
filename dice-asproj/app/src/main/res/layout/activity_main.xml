@@ -113,11 +113,11 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnReset"
+        android:id="@+id/btnPrep"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="resetClick"
-        android:text="Reset"
+        android:onClick="prepClick"
+        android:text="Prep"
         app:layout_constraintBottom_toBottomOf="@+id/btnRoll"
         app:layout_constraintEnd_toStartOf="@+id/btnRoll"
         app:layout_constraintStart_toStartOf="parent" />

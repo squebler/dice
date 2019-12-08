@@ -111,16 +111,16 @@
         android:layout_marginTop="36dp"
         android:onClick="rollClick"
         android:text="Roll"
-        app:layout_constraintEnd_toEndOf="@+id/btnReset"
-        app:layout_constraintStart_toEndOf="@+id/btnReset"
+        app:layout_constraintEnd_toEndOf="@+id/btnPrep"
+        app:layout_constraintStart_toEndOf="@+id/btnPrep"
         app:layout_constraintTop_toBottomOf="@+id/btnD12" />
 
     <Button
-        android:id="@+id/btnReset"
+        android:id="@+id/btnPrep"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="resetClick"
-        android:text="Reset"
+        android:onClick="prepClick"
+        android:text="Prep"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.03"
         app:layout_constraintStart_toStartOf="parent"
@@ -132,7 +132,7 @@
         android:layout_height="wrap_content"
         android:onClick="clearClick"
         android:text="Clear"
-        app:layout_constraintStart_toEndOf="@+id/btnReset"
+        app:layout_constraintStart_toEndOf="@+id/btnPrep"
         app:layout_constraintTop_toBottomOf="@+id/btnRoll" />
 
     <ScrollView
