@@ -26,7 +26,10 @@ public class MainActivity extends Activity {
     private List<TableDie> tableDice;
     private Random rand;
 
+    private TextView lblRollValue;
     private EditText tbPlus;
+    private TextView lblEquals;
+    private TextView lblTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +43,6 @@ public class MainActivity extends Activity {
         rand = new Random();
 
         tbPlus = findViewById(R.id.tbPlus);
-
         tbPlus.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -62,10 +64,21 @@ public class MainActivity extends Activity {
                 updateStats();
             }
         });
+
+        lblRollValue = findViewById(R.id.lblRollValue);
+        lblEquals = findViewById(R.id.lblEquals);
+        lblTotal = findViewById(R.id.lblTotal);
+        lblRollValue.setVisibility(View.INVISIBLE);
+        lblEquals.setVisibility(View.INVISIBLE);
+        lblTotal.setVisibility(View.INVISIBLE);
     }
 
     public void dieGenClick(View view) {
         tbPlus.clearFocus();
+
+        lblRollValue.setVisibility(View.INVISIBLE);
+        lblEquals.setVisibility(View.INVISIBLE);
+        lblTotal.setVisibility(View.INVISIBLE);
 
         final Button btnDieGen = (Button)view;
 
@@ -160,7 +173,12 @@ public class MainActivity extends Activity {
             rollValueAllDice += rollValueDie;
             tableDie.getButton().setText(Integer.toString(rollValueDie));
         }
+
         updateStats();
+
+        lblRollValue.setVisibility(View.VISIBLE);
+        lblEquals.setVisibility(View.VISIBLE);
+        lblTotal.setVisibility(View.VISIBLE);
     }
 
     public void prepClick(View view) {
@@ -172,6 +190,10 @@ public class MainActivity extends Activity {
 
         rollValueAllDice = 0;
         updateStats();
+
+        lblRollValue.setVisibility(View.INVISIBLE);
+        lblEquals.setVisibility(View.INVISIBLE);
+        lblTotal.setVisibility(View.INVISIBLE);
     }
 
     public void clearClick(View view) {
@@ -183,6 +205,10 @@ public class MainActivity extends Activity {
         rollValueAllDice = 0;
         tbPlus.setText("0");
         updateStats();
+
+        lblRollValue.setVisibility(View.INVISIBLE);
+        lblEquals.setVisibility(View.INVISIBLE);
+        lblTotal.setVisibility(View.INVISIBLE);
     }
 
     public void backgroundClick(View view) {
