@@ -1,24 +1,16 @@
 package com.zerimaria.dice;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.flexbox.FlexboxLayout;
 
@@ -30,7 +22,7 @@ public class MainActivity extends Activity {
 
     private final int ROW_HEIGHT = 60;
 
-    private int rollValue = 0;
+    private int rollValueAllDice = 0;
     private List<TableDie> tableDice;
     private Random rand;
 
@@ -144,6 +136,8 @@ public class MainActivity extends Activity {
         ((TextView)findViewById(R.id.lblMin)).setText("min: " + Float.toString(min));
         ((TextView)findViewById(R.id.lblMax)).setText("max: " + Float.toString(max));
         ((TextView)findViewById(R.id.lblAvg)).setText("avg: " + Float.toString(sumOfAvgs));
+        ((TextView)findViewById(R.id.lblTotal)).setText(Integer.toString(rollValueAllDice + plusValue));
+        ((TextView)findViewById(R.id.lblRollValue)).setText(Integer.toString(rollValueAllDice));
     }
 
     private int getNumSides(int dieRid) {
@@ -160,14 +154,13 @@ public class MainActivity extends Activity {
     public void rollClick(View view) {
         tbPlus.clearFocus();
 
-        int total = 0;
-        rollValue = 0;
+        rollValueAllDice = 0;
         for (TableDie tableDie : tableDice) {
-            rollValue = rand.nextInt(tableDie.getNumSides()) + 1;
-            total += rollValue;
-            tableDie.getButton().setText(Integer.toString(rollValue));
+            int rollValueDie = rand.nextInt(tableDie.getNumSides()) + 1;
+            rollValueAllDice += rollValueDie;
+            tableDie.getButton().setText(Integer.toString(rollValueDie));
         }
-        ((TextView)findViewById(R.id.lblTotal)).setText(Integer.toString(total));
+        updateStats();
     }
 
     public void resetClick(View view) {
@@ -176,8 +169,9 @@ public class MainActivity extends Activity {
         for (TableDie tableDie : tableDice) {
             tableDie.getButton().setText(tableDie.getName());
         }
-        rollValue = 0;
-        ((TextView)findViewById(R.id.lblTotal)).setText(Integer.toString(0));
+
+        rollValueAllDice = 0;
+        updateStats();
     }
 
     public void clearClick(View view) {
@@ -186,8 +180,8 @@ public class MainActivity extends Activity {
         FlexboxLayout flexboxLayout = findViewById(R.id.flexboxLayout);
         flexboxLayout.removeAllViews();
         tableDice.clear();
+        rollValueAllDice = 0;
         updateStats();
-        ((TextView)findViewById(R.id.lblTotal)).setText(Integer.toString(0));
     }
 
     public void backgroundClick(View view) {
