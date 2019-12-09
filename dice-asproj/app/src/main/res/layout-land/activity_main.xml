@@ -127,7 +127,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnRoll" />
 
     <Button
-        android:id="@+id/btnReset2"
+        android:id="@+id/btnClear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="clearClick"
@@ -148,7 +148,7 @@
         android:requiresFadingEdge="vertical"
         app:layout_constraintBottom_toTopOf="@+id/lblRollValue"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnReset2"
+        app:layout_constraintStart_toEndOf="@+id/btnClear"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.flexbox.FlexboxLayout
