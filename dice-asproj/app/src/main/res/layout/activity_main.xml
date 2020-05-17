@@ -78,15 +78,30 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/ic_d12"
         android:onClick="dieGenClick"
         android:text="d12"
         android:textAllCaps="false"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnRoll"
+        app:layout_constraintBottom_toTopOf="@+id/btnDX"
+        app:layout_constraintEnd_toEndOf="@+id/btnDX"
+        app:layout_constraintStart_toStartOf="@+id/btnDX" />
+
+    <Button
+        android:id="@+id/btnDX"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/ic_d20"
+        android:onClick="dieGenClick"
+        android:text="d?"
+        android:textAllCaps="false"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/btnRoll"
-        app:layout_constraintStart_toStartOf="@+id/btnRoll" />
+        app:layout_constraintStart_toStartOf="@+id/btnRoll"
+        app:layout_constraintBottom_toTopOf="@+id/btnRoll" />
 
     <Button
         android:id="@+id/btnD20"

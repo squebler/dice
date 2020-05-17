@@ -1,17 +1,21 @@
 package com.zerimaria.dice;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.flexbox.FlexboxLayout;
 
@@ -75,6 +79,65 @@ public class MainActivity extends Activity {
     }
 
     public void dieGenClick(View view) {
+        Button btnDieGen = (Button)view;
+        final Button btnDieAct = new Button(this);
+
+        boolean isWildcardDie = "d?".equals(btnDieGen.getText());
+
+        if (isWildcardDie) {
+            dieGenClickWildcard(view, btnDieAct);
+        }
+        else {
+            dieGenClickNormal(view, btnDieAct, false, -1);
+        }
+    }
+
+    public void dieGenClickWildcard(final View view, final Button btnDieAct) {
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptDx = li.inflate(R.layout.prompt_dx, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setView(promptDx);
+        final EditText tbDxSize = promptDx.findViewById(R.id.tbDxSize);
+        tbDxSize.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (tbDxSize.getText().length() < 1) {
+                    tbDxSize.setText("2");
+                    tbDxSize.setSelection(0,1);
+                }
+            }
+        });
+        alertDialogBuilder
+            .setCancelable(false)
+            .setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        btnDieAct.setText("d" + tbDxSize.getText());
+                        int wildcardSize = Integer.parseInt(tbDxSize.getText().toString());
+                        if (wildcardSize < 2) {
+                            Toast.makeText(getApplicationContext(), "Enter 2 or higher.", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            dieGenClickNormal(view, btnDieAct, true, wildcardSize);
+                        }
+                    }
+            })
+            .setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+        alertDialog.getWindow().setLayout(600, 400);
+    }
+
+    public void dieGenClickNormal(final View view, final Button btnDieAct, boolean isWildcardDie, int wildcardSize) {
         tbPlus.clearFocus();
 
 //        lblRollValue.setVisibility(View.INVISIBLE);
@@ -85,8 +148,9 @@ public class MainActivity extends Activity {
 
         final FlexboxLayout flexboxLayout = findViewById(R.id.flexboxLayout);
 
-        final Button btnDieAct = new Button(this);
-        btnDieAct.setText(btnDieGen.getText());
+        if (!isWildcardDie) {
+            btnDieAct.setText(btnDieGen.getText());
+        }
         btnDieAct.setTextSize(TypedValue.COMPLEX_UNIT_PX, btnDieGen.getTextSize());
         btnDieAct.setBackground(btnDieGen.getBackground());
         btnDieAct.setPadding(
@@ -106,7 +170,7 @@ public class MainActivity extends Activity {
         lpBtnDieAct.setMargins((int)(marginHorz / 2), (int)(marginVert / 2), (int)(marginHorz / 2), (int)(marginVert / 2));
         btnDieAct.setLayoutParams(lpBtnDieAct);
 
-        TableDie newDie = new TableDie(btnDieAct, getNumSides(btnDieGen.getId()));
+        TableDie newDie = new TableDie(btnDieAct, isWildcardDie ? wildcardSize : getNumSides(btnDieGen.getId()));
         tableDice.add(newDie);
         btnDieAct.setTag(newDie);
         if (rollValueAllDice != 0) { // Roll it if there's already a roll result, otherwise just display its face.
@@ -190,7 +254,7 @@ public class MainActivity extends Activity {
     private void update_rollValueAllDice() {
         rollValueAllDice = 0;
         for (TableDie tableDie : tableDice) {
-            if (!tableDie.getName().equals(tableDie.getButton().getText().toString())) {
+            if (!tableDie.getButton().getText().toString().startsWith("d")) {
                 int rollValueDie = Integer.parseInt(tableDie.getButton().getText().toString());
                 rollValueAllDice += rollValueDie;
             }
