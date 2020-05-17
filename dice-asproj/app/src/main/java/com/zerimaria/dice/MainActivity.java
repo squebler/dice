@@ -77,9 +77,9 @@ public class MainActivity extends Activity {
     public void dieGenClick(View view) {
         tbPlus.clearFocus();
 
-        lblRollValue.setVisibility(View.INVISIBLE);
-        lblEquals.setVisibility(View.INVISIBLE);
-        lblTotal.setVisibility(View.INVISIBLE);
+//        lblRollValue.setVisibility(View.INVISIBLE);
+//        lblEquals.setVisibility(View.INVISIBLE);
+//        lblTotal.setVisibility(View.INVISIBLE);
 
         final Button btnDieGen = (Button)view;
 
@@ -109,8 +109,14 @@ public class MainActivity extends Activity {
         TableDie newDie = new TableDie(btnDieAct, getNumSides(btnDieGen.getId()));
         tableDice.add(newDie);
         btnDieAct.setTag(newDie);
+        if (rollValueAllDice != 0) { // Roll it if there's already a roll result, otherwise just display its face.
+            int rollValueDie = rand.nextInt(newDie.getNumSides()) + 1;
+            rollValueAllDice += rollValueDie;
+            newDie.getButton().setText(Integer.toString(rollValueDie));
+        }
+        update_rollValueAllDice();
         updateStats();
-        prepClick(view);
+//        prepClick(view);
 
         btnDieAct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,7 +190,7 @@ public class MainActivity extends Activity {
     private void update_rollValueAllDice() {
         rollValueAllDice = 0;
         for (TableDie tableDie : tableDice) {
-            if (tableDie.getName() != tableDie.getButton().getText().toString()) {
+            if (!tableDie.getName().equals(tableDie.getButton().getText().toString())) {
                 int rollValueDie = Integer.parseInt(tableDie.getButton().getText().toString());
                 rollValueAllDice += rollValueDie;
             }
