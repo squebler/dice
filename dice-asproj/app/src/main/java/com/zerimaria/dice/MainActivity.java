@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
@@ -183,8 +184,10 @@ public class MainActivity extends Activity {
     private void update_rollValueAllDice() {
         rollValueAllDice = 0;
         for (TableDie tableDie : tableDice) {
-            int rollValueDie = Integer.parseInt(tableDie.getButton().getText().toString());
-            rollValueAllDice += rollValueDie;
+            if (tableDie.getName() != tableDie.getButton().getText().toString()) {
+                int rollValueDie = Integer.parseInt(tableDie.getButton().getText().toString());
+                rollValueAllDice += rollValueDie;
+            }
         }
     }
 
