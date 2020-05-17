@@ -120,9 +120,8 @@ public class MainActivity extends Activity {
 
                 tableDice.remove(v.getTag());
 
+                update_rollValueAllDice();
                 updateStats();
-                prepClick(v);
-                //todo: update total to value of remaining dice
             }
         });
     }
@@ -179,6 +178,14 @@ public class MainActivity extends Activity {
         lblRollValue.setVisibility(View.VISIBLE);
         lblEquals.setVisibility(View.VISIBLE);
         lblTotal.setVisibility(View.VISIBLE);
+    }
+
+    private void update_rollValueAllDice() {
+        rollValueAllDice = 0;
+        for (TableDie tableDie : tableDice) {
+            int rollValueDie = Integer.parseInt(tableDie.getButton().getText().toString());
+            rollValueAllDice += rollValueDie;
+        }
     }
 
     public void prepClick(View view) {
