@@ -140,10 +140,6 @@ public class MainActivity extends Activity {
     public void dieGenClickNormal(final View view, final Button btnDieAct, boolean isWildcardDie, int wildcardSize) {
         tbPlus.clearFocus();
 
-//        lblRollValue.setVisibility(View.INVISIBLE);
-//        lblEquals.setVisibility(View.INVISIBLE);
-//        lblTotal.setVisibility(View.INVISIBLE);
-
         final Button btnDieGen = (Button)view;
 
         final FlexboxLayout flexboxLayout = findViewById(R.id.flexboxLayout);
@@ -180,7 +176,6 @@ public class MainActivity extends Activity {
         }
         update_rollValueAllDice();
         updateStats();
-//        prepClick(view);
 
         btnDieAct.setOnClickListener(new View.OnClickListener() {
             @Override
