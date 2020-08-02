@@ -7,11 +7,11 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -98,6 +98,7 @@ public class MainActivity extends Activity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(promptDx);
         final EditText tbDxSize = promptDx.findViewById(R.id.tbDxSize);
+
         tbDxSize.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -132,9 +133,18 @@ public class MainActivity extends Activity {
                         dialog.cancel();
                     }
                 });
-        AlertDialog alertDialog = alertDialogBuilder.create();
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        tbDxSize.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
         alertDialog.show();
         alertDialog.getWindow().setLayout(600, 400);
+        tbDxSize.requestFocus();
     }
 
     public void dieGenClickNormal(final View view, final Button btnDieAct, boolean isWildcardDie, int wildcardSize) {
