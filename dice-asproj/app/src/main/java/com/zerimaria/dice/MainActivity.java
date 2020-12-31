@@ -146,7 +146,7 @@ public class MainActivity extends FragmentActivity implements View.OnTouchListen
     }
 
     public void settingsClick(View view) {
-        rollClick(view);
+//        rollClick(view);
 
 //        Intent openSettingsIntent = new Intent(this, SettingsActivity.class);
 //        startActivity(openSettingsIntent);
@@ -160,7 +160,7 @@ public class MainActivity extends FragmentActivity implements View.OnTouchListen
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
-        rollClick(view);
+//        rollClick(view);
 
         return true;
     }
